@@ -20,7 +20,7 @@
 
 Temos uma API que quando recebe um request devolve uma dica de projeto. O objetivo é guardar essas
 dicas numa tabela no banco de dados e fazer uma função que consulte essa tabela e devolva uma dica
-aleatória!
+aleatória! Para a integração com os serviços AWS usaremos a biblioteca __Boto3__.
 
 - Como funciona o DynamoDB?
 
