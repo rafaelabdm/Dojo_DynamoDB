@@ -1,8 +1,13 @@
 # DESAFIO - DOJO DYNAMODB
 
-Integrar a API de dicas de projetos que vocês fizeram com o DynamoDB usando um emulador
-de serviços da AWS chamado LocalStack que permite testarmos serviços localmente sem a 
-necessidade de uma conta. Para rodar o LocalStack, usaremos Docker.
+### OPÇÃO 1
+	Integrar a API de dicas de projetos que vocês fizeram com o DynamoDB usando um emulador
+	de serviços da AWS chamado LocalStack que permite testarmos serviços localmente sem a 
+	necessidade de uma conta. Para rodar o LocalStack, usaremos Docker.
+
+### OPÇÃO 2
+	Caso não estejamos com acesso fácil a essa API, podemos fazer uma funçãozinha que acessa
+	diretamente o banco e retorna uma dica. O resto continua igual.
 
 ## Para isso precisaremos de:
 - Docker
@@ -41,44 +46,45 @@ aleatória!
 		- Precisamos de uma sort key?
 
 
-## Criando a Tabela:
-- Rodar o LocalStack: `docker-compose up`;
+<summary>Comandos para manipular a tabela via linha de comando: </summary>
 
-- Criar suas credenciais AWS (mesmo localmente elas precisam existir).
-	Rode o comando: `aws configure` e dê nomes aos campos:
+	- Rodar o LocalStack: `docker-compose up`;
 
-	EXEMPLO:
-	```
-		AWS Access Key ID: test 
-		AWS Secret Access Key: test
-		Default region name: us-east-1
-		Default output format: json
-	```
+	- Criar suas credenciais AWS (mesmo localmente elas precisam existir).
+		Rode o comando: `aws configure` e dê nomes aos campos:
 
-- Criar a tabela com comandos do AWS CLI. Como estamos usando o localstack, usaremos o `awslocal` na linha de comando, ele ja nos direciona para o endpoint do localstack invés da aws;
+		EXEMPLO:
+		```
+			AWS Access Key ID: test 
+			AWS Secret Access Key: test
+			Default region name: us-east-1
+			Default output format: json
+		```
 
-	Exemplo caso nossa tabela chamasse Dicas
-	```
-	awslocal dynamodb create-table \
-	--table-name Dicas \
-	--attribute-definitions \
-	AttributeName=Id,AttributeType=N \
-	--key-schema \
-	AttributeName=Id,KeyType=HASH \
-	--provisioned-throughput \
-	ReadCapacityUnits=5,WriteCapacityUnits=5
-	```
+	- Criar a tabela com comandos do AWS CLI. Como estamos usando o localstack, usaremos o `awslocal` na linha de comando, ele ja nos direciona para o endpoint do localstack invés da aws;
 
-- Checar se a tabela foi criada com o comando: `awslocal dynamodb list-tables`
+		Exemplo caso nossa tabela chamasse Dicas
+		```
+		awslocal dynamodb create-table \
+		--table-name Dicas \
+		--attribute-definitions \
+		AttributeName=Id,AttributeType=N \
+		--key-schema \
+		AttributeName=Id,KeyType=HASH \
+		--provisioned-throughput \
+		ReadCapacityUnits=5,WriteCapacityUnits=5
+		```
 
-- Adicionar um item com o comando:
+	- Checar se a tabela foi criada com o comando: `awslocal dynamodb list-tables`
 
-	```
-	awslocal dynamodb put-item \
-	--table-name Dicas  \
-	--item \
-	'{"Id": {"N": "1"}, "Projeto": {"S": "Minishell"}, "Dica": {"S": "Cuidado com o Waitpid! Sempre teste <cat | cat | ls> e compare com o Bash original :D"}}'
-	```
+	- Adicionar um item com o comando:
 
-- Checar estado da tabela: com o comando `scan`, conseguimos ver toda a tabela: `awslocal dynamodb scan --table-name Dicas`
+		```
+		awslocal dynamodb put-item \
+		--table-name Dicas  \
+		--item \
+		'{"Id": {"N": "1"}, "Projeto": {"S": "Minishell"}, "Dica": {"S": "Cuidado com o Waitpid! Sempre teste <cat | cat | ls> e compare com o Bash original :D"}}'
+		```
+
+	- Checar estado da tabela: com o comando `scan`, conseguimos ver toda a tabela: `awslocal dynamodb scan --table-name Dicas`
 
