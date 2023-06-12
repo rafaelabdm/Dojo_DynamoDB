@@ -46,45 +46,57 @@ aleatória!
 		- Precisamos de uma sort key?
 
 
-<summary>Comandos para manipular a tabela via linha de comando: </summary>
+## Ajuda para começar:
 
-	- Rodar o LocalStack: `docker-compose up`;
+- Rodar o LocalStack: `docker-compose up`;
 
-	- Criar suas credenciais AWS (mesmo localmente elas precisam existir).
-		Rode o comando: `aws configure` e dê nomes aos campos:
+- Criar suas credenciais AWS (mesmo localmente elas precisam existir).
+	Rode o comando: `aws configure` e dê nomes aos campos:
 
-		EXEMPLO:
-		```
-			AWS Access Key ID: test 
-			AWS Secret Access Key: test
-			Default region name: us-east-1
-			Default output format: json
-		```
+	EXEMPLO:
+	```
+		AWS Access Key ID: test 
+		AWS Secret Access Key: test
+		Default region name: us-east-1
+		Default output format: json
+	```
 
-	- Criar a tabela com comandos do AWS CLI. Como estamos usando o localstack, usaremos o `awslocal` na linha de comando, ele ja nos direciona para o endpoint do localstack invés da aws;
+- Criar a tabela com comandos do AWS CLI. Como estamos usando o localstack, usaremos o `awslocal` na linha de comando, ele ja nos direciona para o endpoint do localstack invés da aws;
 
-		Exemplo caso nossa tabela chamasse Dicas
-		```
-		awslocal dynamodb create-table \
-		--table-name Dicas \
-		--attribute-definitions \
-		AttributeName=Id,AttributeType=N \
-		--key-schema \
-		AttributeName=Id,KeyType=HASH \
-		--provisioned-throughput \
-		ReadCapacityUnits=5,WriteCapacityUnits=5
-		```
+	Exemplo caso nossa tabela chamasse Dicas
+	```
+	awslocal dynamodb create-table \
+	--table-name Dicas \
+	--attribute-definitions \
+	AttributeName=Id,AttributeType=N \
+	--key-schema \
+	AttributeName=Id,KeyType=HASH \
+	--provisioned-throughput \
+	ReadCapacityUnits=5,WriteCapacityUnits=5
+	```
 
-	- Checar se a tabela foi criada com o comando: `awslocal dynamodb list-tables`
+- Checar se a tabela foi criada com o comando: `awslocal dynamodb list-tables`
 
-	- Adicionar um item com o comando:
+- Adicionar um item com o comando:
 
-		```
-		awslocal dynamodb put-item \
-		--table-name Dicas  \
-		--item \
-		'{"Id": {"N": "1"}, "Projeto": {"S": "Minishell"}, "Dica": {"S": "Cuidado com o Waitpid! Sempre teste <cat | cat | ls> e compare com o Bash original :D"}}'
-		```
+	```
+	awslocal dynamodb put-item \
+	--table-name Dicas  \
+	--item \
+	'{"Id": {"N": "1"}, "Projeto": {"S": "Minishell"}, "Dica": {"S": "Cuidado com o Waitpid! Sempre teste <cat | cat | ls> e compare com o Bash original :D"}}'
+	```
 
-	- Checar estado da tabela: com o comando `scan`, conseguimos ver toda a tabela: `awslocal dynamodb scan --table-name Dicas`
+- Checar estado da tabela: com o comando `scan`, conseguimos ver toda a tabela: `awslocal dynamodb scan --table-name Dicas`
 
+## Agora é com vocês!
+
+Temos uma tabela em mãos! Usando Boto3 temos que nos conectar com a tabela e fazer com que ela nos
+devolva uma dica aleatória guardada nela.
+
+### Desafios adcionais:
+- Uma consulta que devolva __todas as dicas__ de um __projeto__;
+- Uma consulta que devolva __todas as dicas__ de projetos de uma __fase__;
+- Uma fun~çao de cadastro de dica, sem ter que registrar pela linha de comando;
+
+#### Para ajudar vocês no desafio: 
+<https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html>
