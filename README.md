@@ -96,7 +96,7 @@ devolva uma dica aleatória guardada nela.
 ### Desafios adcionais:
 - Uma consulta que devolva __todas as dicas__ de um __projeto__;
 - Uma consulta que devolva __todas as dicas__ de projetos de uma __fase__;
-- Uma fun~çao de cadastro de dica, sem ter que registrar pela linha de comando;
+- Uma função de cadastro de dica, sem ter que registrar pela linha de comando;
 
 #### Para ajudar vocês no desafio: 
 <https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html>
